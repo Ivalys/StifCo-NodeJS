@@ -1,0 +1,41 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+      <div class="row">
+        <div class="col-md-12">
+          <h2>Informations n&eacute;cessaires :</h2>
+		  <form action="inscriptionCheck" method="post">
+
+<div class="input-group">
+  <span class="input-group-addon" id="basic-addon1">></span>
+  <input name="user" type="text" class="form-control" placeholder="Identifiant" aria-describedby="basic-addon1">
+</div>
+<div class="input-group">
+  <span class="input-group-addon" id="basic-addon1">></span>
+  <input name="mail" type="text" class="form-control" placeholder="Mail" aria-describedby="basic-addon1">
+</div>
+<div class="input-group">
+  <span class="input-group-addon" id="basic-addon1">></span>
+  <input name="pass" type="password" class="form-control" placeholder="Mot de passe" aria-describedby="basic-addon1">
+</div>
+<div class="input-group">
+  <span class="input-group-addon" id="basic-addon1">></span>
+  <input name="nom" type="text" class="form-control" placeholder="Nom" aria-describedby="basic-addon1">
+</div>
+<div class="input-group">
+  <span class="input-group-addon" id="basic-addon1">></span>
+  <input name="prenom" type="text" class="form-control" placeholder="Pr&eacute;nom" aria-describedby="basic-addon1">
+</div>
+<div class="input-group">
+  <span class="input-group-addon" id="basic-addon1">></span>
+  <input name="adresse" type="text" class="form-control" placeholder="Adresse" aria-describedby="basic-addon1">
+</div>
+<div class="input-group">
+  <span class="input-group-addon" id="basic-addon1">></span>
+  <input name="navigo" type="text" class="form-control" placeholder="Code Navigo" aria-describedby="basic-addon1">
+</div>
+			      <input type="submit" class="btn btn-primary" value="S'enregistrer sur l'application NodeJS" style="width:100%;">
+		</form>
+        </div>
+      </div>
+{% endblock %}

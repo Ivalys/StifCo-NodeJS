@@ -1,0 +1,207 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+      <div class="row">
+        <div class="col-md-12">
+          	<h1>Bonjour <strong>{{ user.user }}</strong> !</h1>
+			<h3>- Proposer une r&eacute;servation :</h3>
+			<form action="userReserve" method="post">
+			<div class="input-group">
+			  	<span class="input-group-addon" id="basic-addon1">></span>
+			  	<input name="dateDebut" type="text" class="form-control" placeholder="Date de début, heure de départ (Ex : 02/02/2002 &agrave; 7h15" aria-describedby="basic-addon1">
+			</div>
+			<div class="input-group">
+			  	<span class="input-group-addon" id="basic-addon1">></span>
+			  	<input name="dateFin" type="text" class="form-control" placeholder="Date de fin, heure de retour (Ex : 02/02/2002 &agrave; 17h30" aria-describedby="basic-addon1">
+			</div>
+			<div class="input-group">
+			  	<span class="input-group-addon" id="basic-addon1">></span>
+			  	<input name="maxSeats" type="text" class="form-control" placeholder="Nombre de places" aria-describedby="basic-addon1">
+			</div>
+			<div class="input-group">
+			  	<span class="input-group-addon" id="basic-addon1">></span>
+			  	<input name="mairie" type="text" class="form-control" placeholder="Mairie de d&eacute;part (vers la gare)" aria-describedby="basic-addon1">
+			</div>
+			<input type="submit" class="btn btn-primary" value="Proposer la r&eacute;servation" style="width:100%;">
+			</form>
+			{% if mesReservations|length > 0 %}
+			<h3>- Réservations que j'ai proposées :</h3>
+	<table class="table">		
+		<tr>
+			<th>#</th>
+			<th>Offre de</th>
+            		<th>Date d&eacute;but, heure d&eacute;part</th>
+            		<th>Date fin, heure de retour</th>
+            		<th>Nombre de places</th>
+			<th>Mairie de d&eacute;part</th>
+			<th>Modifier</th>
+			<th>Supprimer/Annuler</th>
+          	</tr>
+        </thead>
+        <tbody>
+		
+            	{% set i = 1 %}
+		{% for reservation in mesReservations %}
+			<tr>
+				<th scope="row">{{ i }}{% set i = i + 1 %}</th>
+				<td>{{ reservation.nom }} {{ reservation.prenom }}</td>
+            			<td id="dateDebut{{ i }}">{{ reservation.dateDebut }}</td>
+            			<td id="dateFin{{ i }}">{{ reservation.dateFin }}</td>
+            			<td>{{ reservation.nbSeatsTaken }} / <span id="maxSeats{{ i }}">{{ reservation.maxSeats }}</span></td>
+				<td id="mairie{{ i }}">{{ reservation.mairie }}</td>
+				<th><button id="edit{{ i }}" class="btn btn-success" style="width:100%;" onClick="showEdit({{ i }});">Modifier</button></th>
+				<th><button id="delete{{ i }}" name="{{ reservation.id }}" class="btn btn-danger" style="width:100%;" onClick="window.location.href='deleteReserve/{{ reservation.id }}';">Supprimer</button></th>
+			</tr>
+		{% endfor %}
+		
+	</tbody>
+	</table>
+			{% endif %}
+			{% if reservations|length > 0 %}
+			<h3>- R&eacute;servations disponibles :</h3>
+	<table class="table">		
+		<tr>
+			<th>#</th>
+			<th>Offre de</th>
+            		<th>Date d&eacute;but, heure d&eacute;part</th>
+            		<th>Date fin, heure de retour</th>
+            		<th>Nombre de places</th>
+			<th>Mairie de d&eacute;part</th>
+			<th>R&eacute;server</th>
+          	</tr>
+        </thead>
+        <tbody>
+		
+            	{% set i = 1 %}
+		{% for reservation in reservations %}
+			<tr>
+				<th scope="row">{{ i }}{% set i = i + 1 %}</th>
+				<td>{{ reservation.nom }} {{ reservation.prenom }}</td>
+            			<td>{{ reservation.dateDebut }}</td>
+            			<td>{{ reservation.dateFin }}</td>
+            			<td>{{ reservation.nbSeatsTaken }} / {{ reservation.maxSeats }}</td>
+				<td>{{ reservation.mairie }}</td>
+				<th><button class="btn btn-primary" style="width:100%;" onClick="window.location.href='newReserve/{{ reservation.id }}';">S'inscrire</button></th>
+			</tr>
+		{% endfor %}
+		
+	</tbody>
+	</table>
+			{% endif %}
+			{% if mesInscriptions|length > 0 %}
+				<h3>- Mes inscriptions :</h3>
+	<table class="table">		
+		<tr>
+			<th>#</th>
+			<th>Offre de</th>
+            		<th>Date d&eacute;but, heure d&eacute;part</th>
+            		<th>Date fin, heure de retour</th>
+            		<th>Nombre de places</th>
+			<th>Mairie de d&eacute;part</th>
+			<th>D&eacute;sinscription</th>
+          	</tr>
+        </thead>
+        <tbody>
+		
+            	{% set i = 1 %}
+		{% for reservation in mesInscriptions %}
+			<tr>
+				<th scope="row">{{ i }}{% set i = i + 1 %}</th>
+				<td>{{ reservation.nom }} {{ reservation.prenom }}</td>
+            			<td>{{ reservation.dateDebut }}</td>
+            			<td>{{ reservation.dateFin }}</td>
+            			<td>{{ reservation.nbSeatsTaken }} / {{ reservation.maxSeats }}</td>
+				<td>{{ reservation.mairie }}</td>
+				<th><button class="btn btn-danger" style="width:100%;" onClick="window.location.href='deleteInscription/{{ reservation.idInscription }}';">Me d&eacute;sinscrire</button></th>
+			</tr>
+		{% endfor %}
+		
+	</tbody>
+	</table>
+			{% endif %}
+			
+        </div>
+      </div>
+
+<script type="text/javascript">
+var dateDebut = new Array();
+var dateFin = new Array();
+var maxSeats = new Array();
+var mairie = new Array();
+var reservationId = new Array();
+
+function showEdit(line)
+{
+	dateDebut[line] = document.getElementById('dateDebut'+line).innerHTML;
+	dateFin[line] = document.getElementById('dateFin'+line).innerHTML;
+	maxSeats[line] = document.getElementById('maxSeats'+line).innerHTML;
+	mairie[line] = document.getElementById('mairie'+line).innerHTML;
+	reservationId[line] = document.getElementById('delete'+line).getAttribute("name");
+
+	document.getElementById('dateDebut'+line).innerHTML = "<input id='idateDebut"+line+"' type='text' name='dateDebut"+line+"' value='"+document.getElementById('dateDebut'+line).innerHTML+"'></input>";
+	document.getElementById('dateFin'+line).innerHTML = "<input id='idateFin"+line+"' type='text' name='dateFin"+line+"' value='"+document.getElementById('dateFin'+line).innerHTML+"'></input>";
+	document.getElementById('maxSeats'+line).innerHTML = "<input id='imaxSeats"+line+"' type='text' name='maxSeats"+line+"' value='"+document.getElementById('maxSeats'+line).innerHTML+"' style='width:75%;'></input>";
+	document.getElementById('mairie'+line).innerHTML = "<input id='imairie"+line+"' type='text' name='mairie"+line+"' value='"+document.getElementById('mairie'+line).innerHTML+"'></input>";
+
+	document.getElementById('edit'+line).innerHTML = "Valider";
+	document.getElementById('edit'+line).onclick = function(){ doEdit(line); };
+
+	document.getElementById('delete'+line).innerHTML = "Annuler";
+	document.getElementById('delete'+line).onclick = function() { maskEdit(line); };
+}
+
+function maskEdit(line)
+{
+	document.getElementById('dateDebut'+line).innerHTML = dateDebut[line];
+	document.getElementById('dateFin'+line).innerHTML = dateFin[line];
+	document.getElementById('maxSeats'+line).innerHTML = maxSeats[line];
+	document.getElementById('mairie'+line).innerHTML = mairie[line];
+
+	document.getElementById('edit'+line).innerHTML = "Modifier";
+	document.getElementById('edit'+line).onclick = function(){ showEdit(line); };
+
+	document.getElementById('delete'+line).innerHTML = "Supprimer";
+	document.getElementById('delete'+line).onclick = function() { window.location.href='deleteReserve/'+reservationId[line]+''; };
+}
+
+function doEdit(line)
+{
+	var form = document.createElement('form');
+    	form.setAttribute('action', '/editReserve/'+reservationId[line]);
+    	form.setAttribute('method', 'post');
+
+	// dateDebut
+	var inputvar = document.createElement('input');
+       	inputvar.setAttribute('type', 'hidden');
+        inputvar.setAttribute('name', 'dateDebut');
+        inputvar.setAttribute('value', document.getElementById('idateDebut'+line).value);
+        form.appendChild(inputvar);
+
+	// dateFin
+	var inputvar = document.createElement('input');
+       	inputvar.setAttribute('type', 'hidden');
+        inputvar.setAttribute('name', 'dateFin');
+        inputvar.setAttribute('value', document.getElementById('idateFin'+line).value);
+        form.appendChild(inputvar);
+
+	// dateDebut
+	var inputvar = document.createElement('input');
+       	inputvar.setAttribute('type', 'hidden');
+        inputvar.setAttribute('name', 'maxSeats');
+        inputvar.setAttribute('value', document.getElementById('imaxSeats'+line).value);
+        form.appendChild(inputvar);
+
+	// dateDebut
+	var inputvar = document.createElement('input');
+       	inputvar.setAttribute('type', 'hidden');
+        inputvar.setAttribute('name', 'mairie');
+        inputvar.setAttribute('value', document.getElementById('imairie'+line).value);
+        form.appendChild(inputvar);
+
+    	document.body.appendChild(form);
+    	form.submit();
+}
+
+</script>
+{% endblock %}
+

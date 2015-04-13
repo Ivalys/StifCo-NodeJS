@@ -1,0 +1,31 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+      <!-- Example row of columns -->
+      <div class="row">
+	<div class="col-md-12">
+		<center><h2>Le projet StifCo</h2></center>
+		<p style="text-align:justify;text-indent:100px;">
+			{{ test }} Le projet StifCo, d&eacute;velopp&eacute;e en NodeJS (+ ExpressJS, Bootstrap et le moteur de template TWIG) est une application web permettant de mettre en relation des personnes proposant ou souhaitant s'inscrire à un co-voiturage. Ce système de co-voiturage doit être mis en place pour raccorder avec les heures des trains : entre outre, il s'agit d'un système qui se raccorde avec Navigo. Les personnes proposant du co-voiturage bénéficient ainsi de réduction sur leurs cartes Navigo. L'application web place donc les utilisateurs au milieu du système.
+		</p>
+	</div>
+        <div class="col-md-4">
+          <h2>NodeJS</h2>
+	<hr>
+          <p style="text-align:justify;text-indent:100px;">Node.js est une plateforme logicielle libre et événementielle en JavaScript orientée vers les applications réseau qui doivent pouvoir monter en charge. Elle utilise la machine virtuelle V8 et implémente sous licence MIT les spécifications CommonJS. Node.js contient une bibliothèque de serveur HTTP intégrée, ce qui rend possible de faire tourner un serveur web sans avoir besoin d'un logiciel externe comme Apache ou Lighttpd, et permettant de mieux contrôler la façon dont le serveur web fonctionne.</p>
+	<a href="https://nodejs.org/" target="_blank">Site de NodeJS</a><br><br>
+        </div>
+        <div class="col-md-4">
+          <h2>ExpressJS</h2>
+	<hr>
+          <p style="text-align:justify;text-indent:100px;">Express.js est un framework de Node.js qui permet de rapidement cr&eacute;er tout type d'application web de fa&ccedil;on plus ais&eacute; : autant des "single page application" que des applications avec plusieurs pages. Express.js est ici utilis&eacute; en tant que mod&egrave;le MVC avec le pattern PRG.</p>
+	<a href="http://expressjs.com/" target="_blank">Site de Express</a><br><br>
+       </div>
+        <div class="col-md-4">
+          <h2>TWIG</h2>
+	<hr>
+          <p style="text-align:justify;text-indent:100px;">TWIG est un moteur de template qui permet de passer des informations d'un controlleur &agrave; une vue dans un environnement MVC. Contrairement &agrave; ce que dis Wikip&eacute;dia, TWIG n'est pas utilis&eacute; uniquement en PHP et peut donc &ecirc;tre utilis&eacute; avec NodeJS.</p>
+	<a href="http://twig.sensiolabs.org/" target="_blank">Site de TWIG</a><br><br>
+        </div>
+      </div>
+{% endblock %}
